@@ -1,4 +1,4 @@
-# Copyright (C) 2019 taylor.fish <contact@taylor.fish>
+# Copyright (C) 2021 taylor.fish <contact@taylor.fish>
 #
 # This file is part of librecaptcha.
 #
@@ -15,20 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with librecaptcha.  If not, see <http://www.gnu.org/licenses/>.
 
+from collections.abc import Callable, Iterable
+import typing
 
-class Frontend:
-    def __init__(self, recaptcha):
-        self.rc = rc = recaptcha
-        rc.on_token = self.__handle_token
+try:
+    list[int]
+except Exception:
+    List = typing.List
+    Dict = typing.Dict
+    Tuple = typing.Tuple
+else:
+    List = list
+    Dict = dict
+    Tuple = tuple
 
-    def __handle_token(self, token, **kwargs):
-        self.on_token(token)
+try:
+    Callable[[], int]
+except Exception:
+    Callable = typing.Callable
 
-    def on_token(self, token: str, **kwargs):
-        """Callback; set this attribute in the parent class."""
-        raise NotImplementedError
-
-    def run(self, callback=None):
-        if callback:
-            self.on_token = callback
-        self.rc.run()
+try:
+    Iterable[int]
+except Exception:
+    Iterable = typing.Iterable

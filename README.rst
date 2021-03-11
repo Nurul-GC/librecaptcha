@@ -1,7 +1,7 @@
 librecaptcha
 ============
 
-Version 0.6.5
+Version 0.7.4-dev
 
 librecaptcha is a free/libre program and library that allows you to solve
 `reCAPTCHA`_ challenges.
@@ -11,6 +11,14 @@ make it easier to do so—it provides an interface through which a human can
 solve the challenges without proprietary software.*
 
 .. _reCAPTCHA: https://en.wikipedia.org/wiki/ReCAPTCHA
+
+.. image:: misc/screenshot.png
+   :alt: Screenshot of two librecaptcha challenges. The first is a multicaptcha
+         challenge that reads “select all squares with fire hydrants” and the
+         second is a dynamic challenge that reads “select all squares with
+         tractors”.
+
+(`Screenshot attribution <misc/screenshot-attribution.md>`_)
 
 
 Installation
@@ -64,7 +72,7 @@ Usage
 If you installed librecaptcha, you can simply run ``librecaptcha``.
 Otherwise, run ``./librecaptcha.py``. Pass the ``--help`` option to show usage
 information. If you’d like to use the GUI, be sure to pass the ``--gui``
-option.
+option. The token will be printed to the terminal once it’s obtained.
 
 To use librecaptcha programmatically, import it::
 
@@ -107,6 +115,9 @@ Returns: A reCAPTCHA token. This should usually be submitted with the form as
 the value of the ``g-recaptcha-response`` field. These tokens usually expire
 after a couple of minutes.
 
+For a lower-level view of how challenges are obtained and how user input is
+sent, see `recaptcha.py <librecaptcha/recaptcha.py>`_.
+
 
 Notes
 -----
@@ -140,6 +151,22 @@ dozens or more.
 
 What’s new
 ----------
+
+Version 0.7.0:
+
+* librecaptcha now uses `esprima`_ for JavaScript parsing. The old slimit-based
+  implementation will continue to work for now, but is deprecated.
+* Added a small `test server`_. Set the environment variable
+  ``LIBRECAPTCHA_USE_TEST_SERVER`` to a non-empty string when running
+  librecaptcha to connect to the test server.
+* librecaptcha’s behavior matches the behavior of the proprietary client more
+  closely now.
+* Added various tweaks and bug fixes to the GUI and CLI.
+* Improved librecaptcha’s internal architecture.
+* Updated user-agent list.
+
+.. _esprima: https://pypi.org/project/esprima/
+.. _test server: test-server/
 
 Version 0.6.3:
 
@@ -185,7 +212,7 @@ Dependencies
 
   - `Pillow`_
   - `requests`_
-  - `slimit`_
+  - `esprima`_
   - `PyGObject`_ (only for GUI)
 
 The installation instructions above handle installing the Python packages.
@@ -195,7 +222,7 @@ specific versions of the dependencies that have been confirmed to work.
 .. _Python: https://www.python.org/
 .. _Pillow: https://pypi.org/project/Pillow/
 .. _requests: https://pypi.org/project/requests/
-.. _slimit: https://pypi.org/project/slimit/
+.. _esprima: https://pypi.org/project/esprima/
 .. _PyGObject: https://pypi.org/project/PyGObject/
 
 
